@@ -91,7 +91,7 @@ function shouldShowChildren(item: NavItem, index: number) {
             <SidebarMenuButton
               as-child
               :class="chillActive?.parent_id === item.id && child.href === page.url
-                ? 'border-l-4 border-green-200 text-green-700'
+                ? 'border-l-4 border-gray-200 text-gray-700'
                 : ''"
               :tooltip="child.title"
             >
@@ -103,7 +103,7 @@ function shouldShowChildren(item: NavItem, index: number) {
                 <Icon
                   :icon="child.icon"
                   :class="chillActive?.parent_id === item.id && child.href === page.url
-                    ? 'text-green-700'
+                    ? 'text-gray-700'
                     : 'text-gray-600'"
                   class="text-lg"
                 />

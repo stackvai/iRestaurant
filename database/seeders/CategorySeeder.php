@@ -10,7 +10,7 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::create([
-            'menu_id' => 1,
+            'imenus_id' => 1,
             'name' => 'Starters',
             'description' => 'Begin your meal right',
             'image' => 'starters.jpg',
@@ -18,7 +18,7 @@ class CategorySeeder extends Seeder
         ]);
 
         Category::create([
-            'menu_id' => 1,
+            'imenus_id' => 1,
             'name' => 'Main Course',
             'description' => 'Main dishes',
             'image' => 'main.jpg',

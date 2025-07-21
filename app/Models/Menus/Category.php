@@ -9,11 +9,11 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['menu_id', 'name', 'description', 'image', 'is_active'];
+    protected $fillable = ['imenus_id', 'name', 'description', 'image', 'is_active'];
 
     public function menu()
     {
-        return $this->belongsTo(Imenus::class);
+        return $this->belongsTo(Imenus::class, 'imenus_id');
     }
 
     public function items()
