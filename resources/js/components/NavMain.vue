@@ -16,10 +16,12 @@ const chillActive = ref<NavItem | null>(null);
 // Props
 const { items } = defineProps<{ items: NavItem[] }>()
 
-// Flatten to find the current active item
+// Flatten to find the current active item, including deep routes
 onMounted(() => {
   const flat = items.flatMap(i => [i, ...(i.children || [])]);
-  chillActive.value = flat.find(i => page.url === i.href) || null;
+  chillActive.value = flat.find(i =>
+    page.url === i.href || page.url.startsWith(i.href + '/')
+  ) || null;
 });
 
 // Track open dropdowns
@@ -29,7 +31,7 @@ function toggle(index: number) {
   if (openIndexes.value.includes(index)) {
     openIndexes.value = openIndexes.value.filter(i => i !== index);
   } else {
-    openIndexes.value = [index]; // only allow one open at a time
+    openIndexes.value = [index]; // Only allow one open at a time
   }
 }
 
@@ -37,7 +39,7 @@ function isOpen(index: number) {
   return openIndexes.value.includes(index);
 }
 
-// Combine open logic with active-child logic
+// Open dropdown if it contains the current active child
 function shouldShowChildren(item: NavItem, index: number) {
   return isOpen(index) || chillActive.value?.parent_id === item.id;
 }
@@ -90,7 +92,7 @@ function shouldShowChildren(item: NavItem, index: number) {
           >
             <SidebarMenuButton
               as-child
-              :class="chillActive?.parent_id === item.id && child.href === page.url
+              :class="chillActive?.parent_id === item.id && page.url.startsWith(child.href)
                 ? 'border-l-4 border-gray-200 text-gray-700'
                 : ''"
               :tooltip="child.title"
@@ -102,7 +104,7 @@ function shouldShowChildren(item: NavItem, index: number) {
               >
                 <Icon
                   :icon="child.icon"
-                  :class="chillActive?.parent_id === item.id && child.href === page.url
+                  :class="chillActive?.parent_id === item.id && page.url.startsWith(child.href)
                     ? 'text-gray-700'
                     : 'text-gray-600'"
                   class="text-lg"

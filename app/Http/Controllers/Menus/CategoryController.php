@@ -86,8 +86,10 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Imenus $menu, Category $category)
     {
-        //
+         $category->delete();
+
+    return redirect()->route('imenus.show', $menu->id)->with('success', 'Category deleted successfully.');
     }
 }
