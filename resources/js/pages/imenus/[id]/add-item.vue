@@ -6,7 +6,7 @@
                 <Input v-model="form.name" label="Item Name" required />
                 <Input v-model="form.description" label="Description" />
                 <Input v-model="form.image" label="Image URL" />
-                <Input v-model="form.price" label="Price" type="number" />
+                <Input v-model="form.price" label="Price" type="number" step="0.01" />
                 <label class="flex items-center gap-2 mt-2">
                     <input type="checkbox" v-model="form.is_active" />
                     <span>Active</span>

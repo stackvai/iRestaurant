@@ -9,7 +9,6 @@ import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 const page = usePage();
 const sidebar = page.props.sidebar as NavItem[];
-console.log(sidebar)
 const mainNavItems: NavItem[] = sidebar;
 
 const footerNavItems: NavItem[] = [

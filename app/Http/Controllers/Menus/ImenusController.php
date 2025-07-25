@@ -9,10 +9,11 @@ use Inertia\Inertia;
 
 class ImenusController extends Controller
 {
+    private $menuId = 4;
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $imenus = Imenus::all();
         return Inertia::render('imenus/index', [

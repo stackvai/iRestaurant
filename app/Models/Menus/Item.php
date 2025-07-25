@@ -19,8 +19,11 @@ class Item extends Model
     public function options()
     {
         return $this->belongsToMany(Option::class, 'item_option')
-            ->withPivot('is_required', 'max_selection')
+            ->withPivot(['is_required', 'min_selection', 'max_selection', 'multiple_selection'])
             ->withTimestamps();
     }
+    public function itemOptions()
+    {
+        return $this->hasMany(ItemOption::class);
+    }
 }
-

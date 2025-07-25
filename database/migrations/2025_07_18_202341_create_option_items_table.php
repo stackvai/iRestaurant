@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('option_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('option_id')->constrained()->onDelete('cascade');
-
             $table->string('name');
             $table->text('description')->nullable();
             $table->decimal('extra_price', 8, 2)->default(0.00);
-            $table->boolean('is_default')->default(false); // default selected if needed
+            $table->integer('position')->default(0);
+            $table->boolean('is_default')->default(false);
             $table->boolean('is_active')->default(true);
 
             $table->timestamps();

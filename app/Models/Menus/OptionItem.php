@@ -9,7 +9,7 @@ class OptionItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['option_id', 'name', 'description', 'extra_price', 'is_default', 'is_active'];
+    protected $fillable = ['option_id', 'name', 'description', 'extra_price','position', 'is_default', 'is_active'];
 
     public function option()
     {

@@ -15,12 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('item_id')->constrained()->onDelete('cascade');
             $table->foreignId('option_id')->constrained()->onDelete('cascade');
-
             $table->boolean('is_required')->default(false);
+            $table->integer('min_selection')->default(1);
             $table->integer('max_selection')->default(1);
-
+            $table->boolean('multiple_selection')->default(false);
             $table->timestamps();
-
             $table->unique(['item_id', 'option_id']);
         });
     }

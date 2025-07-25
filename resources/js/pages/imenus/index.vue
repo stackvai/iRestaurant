@@ -4,13 +4,13 @@
             <div class="flex flex-row items-center justify-between">
                 <h1 class="text-2xl font-bold">All Menus</h1>
                 <Link href="/imenus/create">
-                <Button>Create New Menu</Button>
+                <Button> <Icon name="plus"/> Create New Menu</Button>
                 </Link>
             </div>
             <hr class="my-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" v-if="imenus.length">
-                <div v-for="menu in imenus" :key="menu.id" class="border p-1 rounded shadow">
-                    <img :src="menu.image" alt="" class="w-full h-52 object-cover rounded" />
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" v-if="imenus.length">
+                <div v-for="menu in imenus" :key="menu.id" class="border p-1 rounded-xl shadow">
+                    <img :src="menu.image" alt="" class="w-full h-52 object-cover rounded-xl" />
                     <div class="p-3">
                         <div class="flex items-center  gap-2">
                             <h2 class="text-xl font-semibold">{{ menu.name }}</h2>
@@ -53,6 +53,7 @@ import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
 import { router } from '@inertiajs/vue3';
+import Icon from '@/components/Icon.vue';
 const breadcrumbs = [
     { title: 'Dashboard', href: '/' },
     { title: 'Menus', href: '/imenus' },

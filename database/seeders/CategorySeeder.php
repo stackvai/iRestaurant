@@ -11,7 +11,7 @@ class CategorySeeder extends Seeder
     {
         Category::create([
             'imenus_id' => 1,
-            'name' => 'Starters',
+            'name' => 'Pizza',
             'description' => 'Begin your meal right',
             'image' => 'starters.jpg',
             'is_active' => true,
@@ -19,7 +19,7 @@ class CategorySeeder extends Seeder
 
         Category::create([
             'imenus_id' => 1,
-            'name' => 'Main Course',
+            'name' => 'Burgers',
             'description' => 'Main dishes',
             'image' => 'main.jpg',
             'is_active' => true,

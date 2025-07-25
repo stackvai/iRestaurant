@@ -19,13 +19,11 @@ class Permission extends Controller
 
         $success = AccessToUser::where('user_id', Auth::user()->id)->where('menu_id', $menuId)->where('action_id', $actionId)->count();
         // Check User Access or Not ** Customize Permission Check **
-        if($success > 0 || $request->user()->role_id == 1){
+        if ($success > 0 || $request->user()->role_id == 1) {
 
             return true;
-
         }
 
         return false;
     }
-
 }

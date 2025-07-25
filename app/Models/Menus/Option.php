@@ -13,14 +13,13 @@ class Option extends Model
 
     public function optionItems()
     {
-        return $this->hasMany(OptionItem::class);
+        return $this->hasMany(OptionItem::class, 'option_id');
     }
 
     public function items()
     {
         return $this->belongsToMany(Item::class, 'item_option')
-            ->withPivot('is_required', 'max_selection')
+            ->withPivot(['is_required', 'min_selection', 'max_selection', 'multiple_selection'])
             ->withTimestamps();
     }
 }
-

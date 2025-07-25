@@ -9,16 +9,10 @@ class OptionSeeder extends Seeder
 {
     public function run(): void
     {
-        Option::create([
-            'name' => 'Choose Sauce',
-            'description' => 'Select your preferred sauce',
-            'is_active' => true,
-        ]);
-
-        Option::create([
-            'name' => 'Add-ons',
-            'description' => 'Extra toppings and sides',
-            'is_active' => true,
+        Option::insert([
+            ['name' => 'Size', 'description' => 'Choose your size', 'is_active' => true],
+            ['name' => 'Toppings', 'description' => 'Extra toppings', 'is_active' => true],
         ]);
     }
 }
+
