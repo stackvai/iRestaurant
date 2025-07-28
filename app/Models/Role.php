@@ -18,4 +18,11 @@ class Role extends Model
     {
         return $this->hasMany(AccessToRole::class);
     }
+    public function hasAccess($menuId, $actionId)
+    {
+        return $this->accessControls()
+            ->where('menu_id', $menuId)
+            ->where('action_id', $actionId)
+            ->exists();
+    }
 }

@@ -26,4 +26,17 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/imenus/{menu}/categories/{category}/items/{item}', [ItemController::class, 'destroy'])->name('imenus.categories.items.destroy');
     //Options
     Route::resource('options', OptionController::class);
+    //Customers
+    Route::resource("customers", CustomerController::class);
+    //Stuffs
+    Route::resource("staffs", StaffController::class);
+    //Roles
+    Route::resource('roles', RoleController::class);
+    Route::get('/roles/{role}/permissions', [RoleAccessController::class, 'edit'])->name('roles.access.edit');
+    Route::post('/roles/{role}/permissions', [RoleAccessController::class, 'update'])->name('roles.access.update');
+    // Only allow access if the slug exists
+    Route::match(['get', 'put'], '/pages/{slug}', [PageController::class, 'handle'])
+        ->where('slug', '[a-zA-Z0-9\-]+')
+        ->name('pages.handle');
+    Route::resource('branches', BranchController::class);
 });
