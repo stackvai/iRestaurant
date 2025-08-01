@@ -28,6 +28,32 @@
             html.dark {
                 background-color: oklch(0.145 0 0);
             }
+            body {
+  --sb-track-color: transparent;
+  --sb-thumb-color: oklch(55.1% 0.027 264.364);
+  --sb-size: 4px;
+}
+::-webkit-scrollbar {
+  width: var(--sb-size)
+}
+
+::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 3px;
+  
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--sb-thumb-color)
+                     var(--sb-track-color);
+  }
+}
         </style>
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>

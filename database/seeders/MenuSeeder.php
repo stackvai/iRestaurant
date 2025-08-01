@@ -14,11 +14,11 @@ class MenuSeeder extends Seeder
 
         $menus = [
             ['id' => 1, 'parent_id' => null, 'name' => 'Dashboard', 'href' => '/dashboard', 'icon' => 'mdi:home', 'sequance' => 1, 'status' => 1],
-            ['id' => 2, 'parent_id' => null, 'name' => 'Staff', 'href' => '/staff', 'icon' => 'fa-solid:users', 'sequance' => 2, 'status' => 1],
-            ['id' => 3, 'parent_id' => null, 'name' => 'Customer', 'href' => '/customer', 'icon' => 'raphael:users', 'sequance' => 3, 'status' => 1],
+            ['id' => 2, 'parent_id' => null, 'name' => 'Staff', 'href' => '/staffs', 'icon' => 'fa-solid:users', 'sequance' => 2, 'status' => 1],
+            ['id' => 3, 'parent_id' => null, 'name' => 'Customer', 'href' => '/customers', 'icon' => 'raphael:users', 'sequance' => 3, 'status' => 1],
             ['id' => 4, 'parent_id' => null, 'name' => 'Menus', 'href' => '#', 'icon' => 'bx:food-menu', 'sequance' => 4, 'status' => 1],
             ['id' => 5, 'parent_id' => null, 'name' => 'Stock Manager', 'href' => '/stocks', 'icon' => 'material-symbols:delivery-truck-speed', 'sequance' => 5, 'status' => 1],
-            ['id' => 6, 'parent_id' => null, 'name' => 'Branch', 'href' => '/branch', 'icon' => 'ph:warehouse-fill', 'sequance' => 6, 'status' => 1],
+            ['id' => 6, 'parent_id' => null, 'name' => 'Branch', 'href' => '/branches', 'icon' => 'ph:warehouse-fill', 'sequance' => 6, 'status' => 1],
             ['id' => 7, 'parent_id' => null, 'name' => 'Reviews', 'href' => '/reviews', 'icon' => 'game-icons:warehouse', 'sequance' => 7, 'status' => 1],
             ['id' => 8, 'parent_id' => null, 'name' => 'Sales', 'href' => '/sales', 'icon' => 'fluent:tag-multiple-16-filled', 'sequance' => 8, 'status' => 1],
             ['id' => 9, 'parent_id' => null, 'name' => 'Marketing', 'href' => '/marketing', 'icon' => 'ri:database-fill', 'sequance' => 9, 'status' => 1],

@@ -1,14 +1,14 @@
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="p-6">
+        <div class="p-4">
             <div class="flex flex-row items-center justify-between">
-                <h1 class="text-2xl font-bold">All Menus</h1>
+                <Heading title="All Menus" />
                 <Link href="/imenus/create">
                 <Button> <Icon name="plus"/> Create New Menu</Button>
                 </Link>
             </div>
-            <hr class="my-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" v-if="imenus.length">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 p-4" v-if="imenus.length">
                 <div v-for="menu in imenus" :key="menu.id" class="border p-1 rounded-xl shadow">
                     <img :src="menu.image" alt="" class="w-full h-52 object-cover rounded-xl" />
                     <div class="p-3">
@@ -54,6 +54,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
 import { router } from '@inertiajs/vue3';
 import Icon from '@/components/Icon.vue';
+import Heading from '@/components/Heading.vue';
 const breadcrumbs = [
     { title: 'Dashboard', href: '/' },
     { title: 'Menus', href: '/imenus' },

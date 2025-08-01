@@ -84,7 +84,7 @@ function shouldShowChildren(item: NavItem, index: number) {
           :class="shouldShowChildren(item, index)
             ? 'max-h-fit opacity-100'
             : 'max-h-0 opacity-0'"
-          class="pl-4 overflow-hidden transition-all duration-300 ease-in-out"
+          class=" overflow-hidden transition-all duration-300 ease-in-out"
         >
           <SidebarMenuItem
             v-for="child in item.children"

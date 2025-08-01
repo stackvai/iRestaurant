@@ -39,4 +39,8 @@ Route::middleware(['auth'])->group(function () {
         ->where('slug', '[a-zA-Z0-9\-]+')
         ->name('pages.handle');
     Route::resource('branches', BranchController::class);
+    //pos
+    Route::get('/pos', [POSController::class, 'index'])->name('pos.index');
+    Route::post('/pos/order', [POSController::class, 'store'])->name('pos.store');
+
 });
