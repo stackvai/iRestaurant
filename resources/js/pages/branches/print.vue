@@ -22,6 +22,7 @@ onMounted(() => {
 </script>
 
 <template>
+
   <Head title="Print All Branches" />
   <AppLayout :breadcrumbs="breadcrumbs">
     <div class="p-4">
@@ -39,25 +40,25 @@ onMounted(() => {
         <thead>
           <tr class="bg-gray-100">
             <th class="border p-2">ID</th>
+            <th class="border p-2">Image</th>
             <th class="border p-2">Name</th>
             <th class="border p-2">Location</th>
             <th class="border p-2">Phone</th>
             <th class="border p-2">Description</th>
-            <th class="border p-2">Image</th>
             <th class="border p-2">Status</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="branch in branches" :key="branch.id">
             <td class="border p-2">{{ branch.id }}</td>
+            <td class="border p-2">
+              <img v-if="branch.image" :src="branch.image" class="w-12 h-12 object-cover rounded" />
+              <span v-else>-</span>
+            </td>
             <td class="border p-2">{{ branch.name }}</td>
             <td class="border p-2">{{ branch.location }}</td>
             <td class="border p-2">{{ branch.phone }}</td>
             <td class="border p-2">{{ branch.description }}</td>
-            <td class="border p-2">
-              <img v-if="branch.image" :src="branch.image" class="w-20 h-20 object-cover" />
-              <span v-else>-</span>
-            </td>
             <td class="border p-2">{{ branch.status ? 'Active' : 'Inactive' }}</td>
           </tr>
         </tbody>

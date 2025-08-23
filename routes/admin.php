@@ -32,6 +32,12 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('options', OptionController::class);
     //Customers
     Route::resource("customers", CustomerController::class);
+    // Staff export (CSV)
+    Route::get('/staffs/export', [StaffController::class, 'export'])
+        ->name('staffs.export');
+    // Staff print (all data)
+    Route::get('/staffs/print', [StaffController::class, 'print'])
+        ->name('staffs.print');
     //Stuffs
     Route::resource("staffs", StaffController::class);
     //Roles
@@ -42,14 +48,14 @@ Route::middleware(['auth'])->group(function () {
     Route::match(['get', 'put'], '/pages/{slug}', [PageController::class, 'handle'])
         ->where('slug', '[a-zA-Z0-9\-]+')
         ->name('pages.handle');
-// Branch export (CSV)
-Route::get('/branches/export', [BranchController::class, 'export'])
-    ->name('branches.export');
-// Branch print (all data)
-Route::get('/branches/print', [BranchController::class, 'print'])
-    ->name('branches.print');
-// Branch resource routes
-Route::resource('branches', BranchController::class)->except(['show']);
+    // Branch export (CSV)
+    Route::get('/branches/export', [BranchController::class, 'export'])
+        ->name('branches.export');
+    // Branch print (all data)
+    Route::get('/branches/print', [BranchController::class, 'print'])
+        ->name('branches.print');
+    // Branch resource routes
+    Route::resource('branches', BranchController::class)->except(['show']);
 
     //pos
     Route::get('/pos', [POSController::class, 'index'])->name('pos.index');

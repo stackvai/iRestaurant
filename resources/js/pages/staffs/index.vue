@@ -1,12 +1,15 @@
-<script setup>
+<script lang="ts" setup>
 import { ref, watch } from 'vue'
-import { Link, router } from '@inertiajs/vue3'
+import { Head, Link, router } from '@inertiajs/vue3'
 import AppLayout from '@/layouts/AppLayout.vue'
 import Button from '@/components/ui/button/Button.vue'
 import Icon from '@/components/Icon.vue'
 import Input from '@/components/ui/input/Input.vue'
 import Heading from '@/components/Heading.vue'
-
+import { useAccess } from '@/composables/useAccess'
+const { can } = useAccess('staffs')
+import { useToast } from '@/composables/useToast'
+const { showToast } = useToast()
 const props = defineProps({
   staff: Object,
   filters: Object
@@ -21,9 +24,35 @@ const search = ref(props.filters.search || '')
 watch(search, (value) => {
   router.get('/staffs', { search: value }, { preserveState: true })
 })
+function applySearch() {
+  router.get('/staffs', { search: search.value }, { preserveState: true })
+}
+
+async function downloadCsv() {
+  try {
+    const response = await fetch('/staffs/export');
+
+    if (!response.ok) throw new Error('Failed to export');
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'staffs.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+
+    showToast('Success', 'Staffs exported successfully!', 'success');
+  } catch (error) {
+    console.error(error);
+    showToast('Failed', 'Failed to export staffs. Please try again.', 'error');
+  }
+}
 </script>
 
 <template>
+
+  <Head title="All Staffs" />
   <AppLayout :breadcrumbs="breadcrumbs">
     <div class="p-6">
       <div class="flex items-center justify-between mb-4">
@@ -36,13 +65,20 @@ watch(search, (value) => {
         </Link>
       </div>
       <div class="flex justify-between items-center gap-2 mb-4">
-        <Input v-model="search" type="text" placeholder="Search staff..." class="w-64" />
-        <div class="flex justify-end gap-2">
-          <Button>
-            <Icon name="printer" /> Print
+        <div class="flex justify-start items-center gap-2">
+          <Input v-model="search" type="text" placeholder="Search staff..." class="border rounded px-3 w-64" />
+          <Button @click="applySearch">
+            <Icon name="search" />
           </Button>
+        </div>
+        <div class="flex justify-end gap-2">
+          <Link href="staffs/print" v-if="can('print')">
           <Button>
-            <Icon name="sheet" /> Export
+            <Icon name="printer" /> Print All Data
+          </Button>
+          </Link>
+          <Button v-if="can('export')" @click="downloadCsv">
+            <Icon name="sheet" /> Export as Excel
           </Button>
         </div>
       </div>
@@ -51,22 +87,28 @@ watch(search, (value) => {
         <table class="min-w-full table-auto">
           <thead>
             <tr class="bg-gray-100 text-left text-sm font-medium">
-              <th class="px-4 py-2">#</th>
-              <th class="px-4 py-2">Name</th>
-              <th class="px-4 py-2">Email</th>
-              <th class="px-4 py-2">Mobile</th>
-              <th class="px-4 py-2">Role</th>
-              <th class="px-4 py-2">Status</th>
+              <th class="border px-4 py-2">ID</th>
+              <th class="border px-4 py-2">Image</th>
+              <th class="border px-4 py-2">Name</th>
+              <th class="border px-4 py-2">Email</th>
+              <th class="border px-4 py-2">Mobile</th>
+              <th class="border px-4 py-2">Role</th>
+              <th class="border px-4 py-2">Status</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(user, index) in staff.data" :key="user.id" class="border-t">
-              <td class="px-4 py-2">{{ index + 1 + (staff.current_page - 1) * staff.per_page }}</td>
-              <td class="px-4 py-2">{{ user.name }}</td>
-              <td class="px-4 py-2">{{ user.email }}</td>
-              <td class="px-4 py-2">{{ user.mobile || '-' }}</td>
-              <td class="px-4 py-2">{{ user.role?.name || '-' }}</td>
-              <td class="px-4 py-2">{{ user.status ? "Active" : "Blocked" || '-' }}</td>
+              <td class="border px-4 py-2">{{ index + 1 + (staff.current_page - 1) * staff.per_page }}</td>
+              <td class="border p-2 text-center">
+                <img v-if="user.image" :src="user.image"
+                  class="w-12 h-12 object-cover rounded" />
+                <span v-else>-</span>
+              </td>
+              <td class="border px-4 py-2">{{ user.name }}</td>
+              <td class="border px-4 py-2">{{ user.email }}</td>
+              <td class="border px-4 py-2">{{ user.mobile || '-' }}</td>
+              <td class="border px-4 py-2">{{ user.role?.name || '-' }}</td>
+              <td class="border px-4 py-2">{{ user.status ? "Active" : "Blocked" || '-' }}</td>
             </tr>
           </tbody>
         </table>

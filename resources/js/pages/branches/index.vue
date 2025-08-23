@@ -40,6 +40,10 @@ const search = ref(props.filters.search || '')
 watch(search, (value) => {
     router.get('/branches', { search: value }, { preserveState: true })
 })
+function applySearch() {
+    router.get('/branches', { search: search.value }, { preserveState: true })
+}
+
 
 async function downloadCsv() {
     try {
@@ -81,16 +85,21 @@ async function downloadCsv() {
                 </Link>
             </div>
             <div class="flex justify-between items-center">
-                <Input v-model="search" type="text" placeholder="Search customers..."
-                    class="border rounded px-3 w-64" />
+                <div class="flex justify-start items-center gap-2">
+                    <Input v-model="search" type="text" placeholder="Search customers..."
+                        class="border rounded px-3 w-64" />
+                    <Button @click="applySearch">
+                        <Icon name="search" />
+                    </Button>
+                </div>
                 <div class="flex justify-end gap-2">
                     <Link href="/branches/print">
                     <Button v-if="can('print')" @click="printBranches">
-                        <Icon name="printer" /> Print
+                        <Icon name="printer" /> Print All Data
                     </Button>
                     </Link>
                     <Button v-if="can('export')" @click="downloadCsv">
-                        <Icon name="sheet" /> Export
+                        <Icon name="sheet" /> Export as Excel
                     </Button>
                 </div>
             </div>
