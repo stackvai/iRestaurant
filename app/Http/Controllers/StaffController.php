@@ -15,8 +15,13 @@ class StaffController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->input('search');
 
+        if (!AccessHelper::hasAccess('staffs', 'view')) {
+            abort(403, 'Unauthorized');
+        }
+
+        $search = $request->input('search');
+        $perPage  = $request->input('per_page', 10);
         $staff = User::with('role')
             ->whereNotIn('role_id', [1, 5]) // Exclude Admin (1) and Customer (5)
             ->when($search, function ($query, $search) {
@@ -27,7 +32,7 @@ class StaffController extends Controller
                 });
             })
             ->orderBy('id', 'desc')
-            ->paginate(10)
+            ->paginate($perPage)
             ->withQueryString();
 
 

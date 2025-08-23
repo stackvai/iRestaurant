@@ -10,6 +10,16 @@ import { useAccess } from '@/composables/useAccess'
 const { can } = useAccess('staffs')
 import { useToast } from '@/composables/useToast'
 const { showToast } = useToast()
+import {
+  ComboboxRoot,
+  ComboboxInput,
+  ComboboxTrigger,
+  ComboboxContent,
+  ComboboxViewport,
+  ComboboxItem,
+  ComboboxAnchor
+} from 'reka-ui'
+import Dropdown from '@/components/Dropdown.vue'
 const props = defineProps({
   staff: Object,
   filters: Object
@@ -20,10 +30,12 @@ const breadcrumbs = [
   { title: 'Staffs', href: '/Staffs' },
 ]
 const search = ref(props.filters.search || '')
+const perPage = ref(props.filters.per_page || 10)
 
-watch(search, (value) => {
-  router.get('/staffs', { search: value }, { preserveState: true })
+watch(perPage, (value) => {
+  router.get('/staffs', { search: search.value, per_page: value }, { preserveState: true })
 })
+
 function applySearch() {
   router.get('/staffs', { search: search.value }, { preserveState: true })
 }
@@ -72,6 +84,13 @@ async function downloadCsv() {
           </Button>
         </div>
         <div class="flex justify-end gap-2">
+          <Dropdown v-model="perPage" :options="[
+            { label: '10 per page', value: 10 },
+            { label: '25 per page', value: 25 },
+            { label: '50 per page', value: 50 },
+            { label: '100 per page', value: 100 }
+          ]" />
+
           <Link href="staffs/print" v-if="can('print')">
           <Button>
             <Icon name="printer" /> Print All Data
@@ -100,8 +119,7 @@ async function downloadCsv() {
             <tr v-for="(user, index) in staff.data" :key="user.id" class="border-t">
               <td class="border px-4 py-2">{{ index + 1 + (staff.current_page - 1) * staff.per_page }}</td>
               <td class="border p-2 text-center">
-                <img v-if="user.image" :src="user.image"
-                  class="w-12 h-12 object-cover rounded" />
+                <img v-if="user.image" :src="user.image" class="w-12 h-12 object-cover rounded" />
                 <span v-else>-</span>
               </td>
               <td class="border px-4 py-2">{{ user.name }}</td>

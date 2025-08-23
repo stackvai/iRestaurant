@@ -17,6 +17,7 @@ class BranchController extends Controller
         }
 
         $search = $request->input('search');
+        $perPage  = $request->input('per_page', 10);
 
         $branches = Branch::when($search, function ($query, $search) {
             $query->where(function ($q) use ($search) {
@@ -25,7 +26,7 @@ class BranchController extends Controller
             });
         })
             ->latest()
-            ->paginate(10)
+            ->paginate($perPage)
             ->withQueryString();
 
         return Inertia::render('branches/index', [

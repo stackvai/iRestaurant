@@ -10,6 +10,7 @@ import { useAccess } from '@/composables/useAccess'
 const { can } = useAccess('branches')
 import DeleteModal from '@/components/DeleteModal.vue'
 import { useToast } from '@/composables/useToast'
+import Dropdown from '@/components/Dropdown.vue';
 const { showToast } = useToast()
 
 
@@ -36,13 +37,17 @@ function handleError() {
 }
 
 const search = ref(props.filters.search || '')
+const perPage = ref(props.filters.per_page || 10)
 
-watch(search, (value) => {
-    router.get('/branches', { search: value }, { preserveState: true })
+// Watch search and perPage together
+watch([search, perPage], ([newSearch, newPerPage]) => {
+    router.get('/branches', { search: newSearch, per_page: newPerPage }, { preserveState: true })
 })
+
 function applySearch() {
-    router.get('/branches', { search: search.value }, { preserveState: true })
+    router.get('/branches', { search: search.value, per_page: perPage.value }, { preserveState: true })
 }
+
 
 
 async function downloadCsv() {
@@ -93,6 +98,12 @@ async function downloadCsv() {
                     </Button>
                 </div>
                 <div class="flex justify-end gap-2">
+                    <Dropdown v-model="perPage" :options="[
+                        { label: '10 per page', value: 10 },
+                        { label: '25 per page', value: 25 },
+                        { label: '50 per page', value: 50 },
+                        { label: '100 per page', value: 100 }
+                    ]" />
                     <Link href="/branches/print">
                     <Button v-if="can('print')" @click="printBranches">
                         <Icon name="printer" /> Print All Data
